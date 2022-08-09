@@ -1,0 +1,50 @@
+GLOBAL URL:
+
+
+https://strapiecommerce-production-514e.up.railway.app/api/products?populate[0]=image
+
+
+URL BY ID :
+
+https://strapiecommerce-production-514e.up.railway.app/api/products?populate[0]=image&filters[id][$in][0]=${id}
+
+
+
+-----------------------------------------------------------------------------------
+
+HOME CON PAGINADO :
+const Home = () => {
+  const [productos, setProductos] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      setLoading(true);
+      const response = await axios.get(
+        `https://strapiecommerce-production-514e.up.railway.app/api/products?populate[0]=image&pagination[page]=${page}`
+      );
+      setProductos(response.data.data);
+      setLoading(false);
+    };
+    getAllProducts();
+  }, [page]);
+
+  return (
+    <div>
+      {loading && <h2>Cargando...</h2>}
+      <button onClick={() => setPage(page - 1)}>Anterior</button>
+      <button onClick={() => setPage(page + 1)}>Siguiente</button>
+
+      {productos.map((p) => (
+        <div key={p.id}>
+          <h2>{p.attributes.title}</h2>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Home;
+
+----------------------------------------------------------------------------------
