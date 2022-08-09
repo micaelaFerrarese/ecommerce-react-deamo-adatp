@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCarritoContext } from "../contexts/carritoContext";
-import Layout from "../components/";
+import Layout from "../components/Layout";
+import axios from "axios";
 
 const Producto = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const Producto = () => {
       <div className="w-full h-full flex items-center justify-between">
         <div id="producto-izquierda" className="w-1/2 p-10">
           <img
-            src={productInfo.data.attributes.image.data.attributes.url}
+            src={productInfo?.data.attributes.image.data.attributes.url}
             className="max-w-full h-auto"
           />
         </div>
@@ -39,9 +40,9 @@ const Producto = () => {
           className="w-1/2 h-full flex flex-col items-center justify-evenly"
         >
           <h1 className="text-5xl font-bold underline">
-            {productInfo.data.attributes.title}
+            {productInfo?.data.attributes.title}
           </h1>
-          <p className="italic">{productInfo.data.attributes.description}</p>
+          <p className="italic">{productInfo?.data.attributes.description}</p>
           <div className="flex items-center w-full justify-evenly">
             <button
               onClick={addToCart}
